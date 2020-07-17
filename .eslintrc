@@ -11,7 +11,9 @@
         "arrow-parens": "off",
         "comma-dangle": "off",
         "require-jsdoc": "off",
+        "no-debugger": "off",
         "eol-last":"off"
+        
     },
     "extends": ["eslint:recommended", "google"]
 }
