@@ -53,11 +53,7 @@ class Dom {
   }
 
   css(styles ={}) {
-    // eslint-disable-next-line guard-for-in
-    for (const key in styles) {
-      console.log(key)
-      console.log(styles[key])
-    }
+    Object.keys(styles).forEach( key => this.$el.style[key] = styles[key])
   }
 }
 
