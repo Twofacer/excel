@@ -4,12 +4,24 @@ class Dom {
      document.querySelector(selector) :
      selector
   }
+
   html(html) {
     if (typeof html === 'string') {
       this.$el.innerHTML = html
       return this
     }
-    return this.$el.outerHTMl.trim()
+    return this.$el.outerHTML.trim()
+  }
+
+  text(text) {
+    if (typeof text === 'string') {
+      this.$el.textContent = text
+      return this
+    }
+    if (this.$el.tagName.toLowerCase() === 'input') {
+      return this.$el.value.trim()
+    }
+    return this.$el.textContent.trim()
   }
 
   clear() {
@@ -28,15 +40,18 @@ class Dom {
   find(selector) {
     return $(this.$el.querySelector(selector))
   }
+
   append(node) {
     if (node instanceof Dom) {
       node = node.$el
     }
+
     if (Element.prototype.append) {
       this.$el.append(node)
     } else {
       this.$el.appendChild(node)
     }
+
     return this
   }
 
@@ -56,8 +71,12 @@ class Dom {
     return this.$el.querySelectorAll(selector)
   }
 
-  css(styles ={}) {
-    Object.keys(styles).forEach( key => this.$el.style[key] = styles[key])
+  css(styles = {}) {
+    Object
+        .keys(styles)
+        .forEach(key => {
+          this.$el.style[key] = styles[key]
+        })
   }
 
   id(parse) {
@@ -79,18 +98,18 @@ class Dom {
   addClass(className) {
     this.$el.classList.add(className)
   }
+
   removeClass(className) {
     this.$el.classList.remove(className)
   }
 }
 
-
 export function $(selector) {
   return new Dom(selector)
 }
 
-$.create = (tagname, classes) => {
-  const el = document.createElement(tagname)
+$.create = (tagName, classes = '') => {
+  const el = document.createElement(tagName)
   if (classes) {
     el.classList.add(classes)
   }
